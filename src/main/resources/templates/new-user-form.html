@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+</head>
+<body>
+Create User
+<p></p>
+<form method="post" action="http://localhost:8080/users">
+    <label for="name">Name</label>
+    <input name="name" type="text" id="name">
+
+    <br>
+    <label for="age">Age</label>
+    <input name="age" type="text" id="age">
+
+    <br>
+    <label for="email">Email</label>
+    <input name="email" type="text" id="email">
+
+    <br>
+    <button type="submit">Create user</button>
+</form>
+</body>
+</html>
