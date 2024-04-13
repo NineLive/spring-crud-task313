@@ -1,8 +1,10 @@
 package ru.spring.crudtask231.springcrudtask.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.spring.crudtask231.springcrudtask.exception.UserNotFoundException;
 import ru.spring.crudtask231.springcrudtask.model.User;
@@ -40,22 +42,25 @@ public class UserController {
     }
 
     @PostMapping()
-    public String createUser(@ModelAttribute User user, Model model) {
-        System.out.println("POST method");
+    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "new-user-form";
+        }
         userService.save(user);
         return "redirect:/users";
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute User user, @PathVariable long id ,Model model) {
-        System.out.println("PAATCH method");
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable long id , Model model) {
+        if(bindingResult.hasErrors()) {
+            return "edit-user-form";
+        }
         userService.update(id, user);
         return "redirect:/users";
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable long id, Model model) {
-        System.out.println("delete method");
         userService.delete(id);
         return "redirect:/users";
     }
