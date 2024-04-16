@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create User</title>
+    <title>Register</title>
 </head>
 <body>
-Create User
-<p></p>
-<form th:method="POST" th:action="@{/admin}" th:object="${user}">
+Register page
+
+<form th:method="POST" th:action="@{/}" th:object="${user}">
     <label for="name">Name</label>
     <input name="name" type="text" id="name">
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
