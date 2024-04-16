@@ -21,7 +21,7 @@ public class AdminController {
     }
 
     @GetMapping
-    public String getAllUsers( Model model) {
+    public String getAllUsers(Model model) {
         model.addAttribute("users", userService.findAll());
         return "users";
     }
@@ -34,7 +34,7 @@ public class AdminController {
 
     @GetMapping("/{id}/edit")
     public String editUserForm(@PathVariable long id, Model model) {
-        if(userService.findById(id).isPresent()) {
+        if (userService.findById(id).isPresent()) {
             model.addAttribute("user", userService.findById(id).get());
         } else {
             throw new UserNotFoundException("User not found");
@@ -44,7 +44,7 @@ public class AdminController {
 
     @PostMapping()
     public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "new-user-form";
         }
         userService.save(user);
@@ -52,8 +52,8 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable long id , Model model) {
-        if(bindingResult.hasErrors()) {
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable long id, Model model) {
+        if (bindingResult.hasErrors()) {
             return "edit-user-form";
         }
         userService.update(id, user);

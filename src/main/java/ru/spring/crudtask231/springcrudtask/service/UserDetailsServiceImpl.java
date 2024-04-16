@@ -11,6 +11,7 @@ import ru.spring.crudtask231.springcrudtask.repository.UserRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
+
     @Autowired
     public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -18,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if(userRepository.findByName(username).isEmpty()){
+        if (userRepository.findByName(username).isEmpty()) {
             throw new UsernameNotFoundException(username);
         }
         return userRepository.findByName(username).get();

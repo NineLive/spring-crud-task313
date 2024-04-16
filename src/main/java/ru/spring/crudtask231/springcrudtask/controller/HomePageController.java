@@ -33,15 +33,16 @@ public class HomePageController {
     public String index() {
         return "index";
     }
+
     @GetMapping("/register")
-    public String register(Model model){
+    public String register(Model model) {
         model.addAttribute("user", new User());
         return "register";
     }
 
     @PostMapping()
     public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "new-user-form";
         }
         Role role = roleRepository.findByRole("ROLE_USER");
