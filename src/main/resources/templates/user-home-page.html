@@ -5,6 +5,31 @@
     <title>User home page</title>
 </head>
 <body>
-User home page
+<table id="123" style="border: solid">
+
+    <tr>
+        <td>Name</td>
+        <td>Age</td>
+        <td>Email</td>
+        <td>Pass</td>
+        <td>Roles</td>
+    </tr>
+
+    <tr>
+        <td th:utext="${user.getName()}">name</td>
+        <td th:utext="${user.getAge()}">age</td>
+        <td th:utext="${user.getEmail()}">email</td>
+        <td th:utext="${user.getPassword()}">password</td>
+
+        <td th:each="role : ${user.getRoles()}">
+            <p th:utext="${role.getRole()}">roles</p>
+        </td>
+    </tr>
+</table>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<a href="/logout">Logout</a>
 </body>
 </html>

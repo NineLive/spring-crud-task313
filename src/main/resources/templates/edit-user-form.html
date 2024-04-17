@@ -24,7 +24,16 @@ Edit User
     <input th:field="*{password}" type="text" id="password">
     <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
     <br>
+    <label for="roles">Roles</label>
+    <input th:field="*{roles}" type="text" id="roles">
+    <div style="color: red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Roles error</div>
+    <br>
     <button type="submit">Edit user</button>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <a href="/logout">Logout</a>
 </form>
 </body>
 </html>

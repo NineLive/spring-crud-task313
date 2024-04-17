@@ -30,7 +30,7 @@ public class HomePageController {
     }
 
     @GetMapping()
-    public String index() {
+    public String rootPage() {
         return "index";
     }
 
@@ -43,7 +43,7 @@ public class HomePageController {
     @PostMapping()
     public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "new-user-form";
+            return "register";
         }
         Role role = roleRepository.findByRole("ROLE_USER");
         Set<Role> roleSet = new HashSet<>();

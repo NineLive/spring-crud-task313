@@ -24,4 +24,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return userRepository.findByName(username).get();
     }
+
+
 }
