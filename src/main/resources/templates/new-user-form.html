@@ -21,8 +21,12 @@ Create User
     <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
     <br>
     <label for="password">Password</label>
-    <input name="password" type="text" id="password">
+    <input name="password" type="password" id="password">
     <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
+    <br>
+    <label for="roles">Roles</label>
+    <input name="roles" type="text" id="roles">
+    <div style="color: red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Roles error</div>
     <br>
     <button type="submit">Create user</button>
 </form>

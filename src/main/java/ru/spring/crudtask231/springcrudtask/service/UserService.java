@@ -10,7 +10,7 @@ public interface UserService {
 
     public Optional<User> findById(long id);
 
-    public void save(User user);
+    public boolean save(User user);
 
     public void update(long id, User updatedUser);
 

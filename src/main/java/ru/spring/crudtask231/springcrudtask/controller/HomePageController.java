@@ -49,7 +49,10 @@ public class HomePageController {
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(role);
         user.setRoles(roleSet);
-        userService.save(user);
+        if (!userService.save(user)){
+            model.addAttribute("userNameError", "Username already exists");
+            return "register";
+        }
         return "redirect:/user";
     }
 }

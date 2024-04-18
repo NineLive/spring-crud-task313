@@ -28,8 +28,13 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void save(User user) {
+    public boolean save(User user) {
+        Optional<User> userFromDB = userRepository.findByName(user.getName());
+        if (userFromDB.isPresent()) {
+            return false;
+        }
         userRepository.save(user);
+        return true;
     }
 
     @Override

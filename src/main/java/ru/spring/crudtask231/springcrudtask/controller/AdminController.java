@@ -47,6 +47,10 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "new-user-form";
         }
+        if (!userService.save(user)){
+            model.addAttribute("userNameError", "Username already exists");
+            return "new-user-form";
+        }
         userService.save(user);
         return "redirect:/admin";
     }
