@@ -12,7 +12,7 @@ public interface UserService {
 
     public boolean save(User user);
 
-    public void update(long id, User updatedUser);
+    public void update(User updatedUser);
 
     public void delete(long id);
 }

@@ -23,7 +23,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
+    @Column(unique = true)
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 2, max = 20, message = "Name length should be between 2-30 characters")
     private String name;

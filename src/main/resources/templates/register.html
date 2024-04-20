@@ -11,6 +11,7 @@ Register page
     <label for="name">Name</label>
     <input name="name" type="text" id="name">
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+    <div style="color: red" th:text="${userNameError}">userNameError</div>
     <br>
     <label for="age">Age</label>
     <input name="age" type="text" id="age">
@@ -26,9 +27,6 @@ Register page
     <br>
     <button type="submit">Create user</button>
 </form>
-<p></p>
-<p></p>
-<p></p>
 <p></p>
 <a href="/logout">Logout</a>
 </body>

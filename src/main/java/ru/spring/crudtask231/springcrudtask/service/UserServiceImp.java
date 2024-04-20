@@ -1,6 +1,7 @@
 package ru.spring.crudtask231.springcrudtask.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.spring.crudtask231.springcrudtask.model.User;
 import ru.spring.crudtask231.springcrudtask.repository.UserRepository;
@@ -11,10 +12,12 @@ import java.util.Optional;
 @Service
 public class UserServiceImp implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImp(UserRepository userRepository) {
+    public UserServiceImp(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,12 +36,13 @@ public class UserServiceImp implements UserService {
         if (userFromDB.isPresent()) {
             return false;
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
     }
 
     @Override
-    public void update(long id, User updatedUser) {
+    public void update(User updatedUser) {
         userRepository.save(updatedUser);
     }
 

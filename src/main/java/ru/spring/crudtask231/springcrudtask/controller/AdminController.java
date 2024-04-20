@@ -2,6 +2,7 @@ package ru.spring.crudtask231.springcrudtask.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,7 @@ public class AdminController {
     @GetMapping("/new")
     public String newUserForm(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("userNameError", null);
         return "new-user-form";
     }
 
@@ -47,25 +49,29 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "new-user-form";
         }
-        if (!userService.save(user)){
+        if (!userService.save(user)) {
             model.addAttribute("userNameError", "Username already exists");
             return "new-user-form";
         }
-        userService.save(user);
         return "redirect:/admin";
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable long id, Model model) {
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "edit-user-form";
         }
-        userService.update(id, user);
+        try {
+            userService.update(user);
+        } catch (DataIntegrityViolationException e) {
+            model.addAttribute("userNameError", "Username already exists");
+            return "edit-user-form";
+        }
         return "redirect:/admin";
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable long id, Model model) {
+    public String deleteUser(@PathVariable long id) {
         userService.delete(id);
         return "redirect:/admin";
     }
