@@ -13,6 +13,10 @@ Register page
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
     <div style="color: red" th:text="${userNameError}">userNameError</div>
     <br>
+    <label for="lastname">LastName</label>
+    <input name="lastname" type="text" id="lastname">
+    <div style="color: red" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Name error</div>
+    <br>
     <label for="age">Age</label>
     <input name="age" type="text" id="age">
     <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>

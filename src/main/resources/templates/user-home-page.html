@@ -15,6 +15,7 @@
 
     <tr>
         <td>Name</td>
+        <td>LastName</td>
         <td>Age</td>
         <td>Email</td>
         <td>Pass</td>
@@ -23,6 +24,7 @@
 
     <tr>
         <td th:utext="${user.getName()}">name</td>
+        <td th:utext="${user.getLastname()}">name</td>
         <td th:utext="${user.getAge()}">age</td>
         <td th:utext="${user.getEmail()}">email</td>
         <td th:utext="${user.getPassword()}">password</td>

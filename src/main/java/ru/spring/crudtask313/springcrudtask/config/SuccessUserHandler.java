@@ -1,4 +1,4 @@
-package ru.spring.crudtask231.springcrudtask.config;
+package ru.spring.crudtask313.springcrudtask.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

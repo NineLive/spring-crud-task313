@@ -1,4 +1,4 @@
-package ru.spring.crudtask231.springcrudtask.model;
+package ru.spring.crudtask313.springcrudtask.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -27,6 +27,11 @@ public class User implements UserDetails {
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 2, max = 20, message = "Name length should be between 2-30 characters")
     private String name;
+
+    @Column(unique = true)
+    @NotEmpty(message = "Name should not be empty")
+    @Size(min = 2, max = 20, message = "Name length should be between 2-30 characters")
+    private String lastname;
 
     @Column
     @NotEmpty(message = "Password should not be empty")

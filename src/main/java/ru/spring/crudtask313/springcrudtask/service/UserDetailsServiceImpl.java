@@ -1,11 +1,11 @@
-package ru.spring.crudtask231.springcrudtask.service;
+package ru.spring.crudtask313.springcrudtask.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.spring.crudtask231.springcrudtask.repository.UserRepository;
+import ru.spring.crudtask313.springcrudtask.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

@@ -1,11 +1,11 @@
-package ru.spring.crudtask231.springcrudtask.controller;
+package ru.spring.crudtask313.springcrudtask.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.spring.crudtask231.springcrudtask.model.User;
+import ru.spring.crudtask313.springcrudtask.model.User;
 
 @Controller
 @RequestMapping("/user")

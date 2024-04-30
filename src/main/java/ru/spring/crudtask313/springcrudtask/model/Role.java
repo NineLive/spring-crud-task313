@@ -1,4 +1,4 @@
-package ru.spring.crudtask231.springcrudtask.model;
+package ru.spring.crudtask313.springcrudtask.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

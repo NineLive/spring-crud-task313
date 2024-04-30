@@ -1,10 +1,10 @@
-package ru.spring.crudtask231.springcrudtask.service;
+package ru.spring.crudtask313.springcrudtask.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.spring.crudtask231.springcrudtask.model.User;
-import ru.spring.crudtask231.springcrudtask.repository.UserRepository;
+import ru.spring.crudtask313.springcrudtask.model.User;
+import ru.spring.crudtask313.springcrudtask.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;

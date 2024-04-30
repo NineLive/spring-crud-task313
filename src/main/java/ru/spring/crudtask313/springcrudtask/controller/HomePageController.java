@@ -1,4 +1,4 @@
-package ru.spring.crudtask231.springcrudtask.controller;
+package ru.spring.crudtask313.springcrudtask.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.spring.crudtask231.springcrudtask.model.Role;
-import ru.spring.crudtask231.springcrudtask.model.User;
-import ru.spring.crudtask231.springcrudtask.repository.RoleRepository;
-import ru.spring.crudtask231.springcrudtask.service.UserService;
+import ru.spring.crudtask313.springcrudtask.model.Role;
+import ru.spring.crudtask313.springcrudtask.model.User;
+import ru.spring.crudtask313.springcrudtask.repository.RoleRepository;
+import ru.spring.crudtask313.springcrudtask.service.UserService;
 
 import java.util.HashSet;
 import java.util.Set;
