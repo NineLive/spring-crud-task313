@@ -10,11 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.spring.crudtask313.springcrudtask.dto.UserDTO;
+import ru.spring.crudtask313.springcrudtask.model.Role;
 import ru.spring.crudtask313.springcrudtask.model.User;
 import ru.spring.crudtask313.springcrudtask.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @CrossOrigin
 @Controller
@@ -62,6 +65,17 @@ public class AdminController {
 //        if (!userService.save(user)) {
 //            return (ResponseEntity<HttpStatus>) ResponseEntity.badRequest();
 //        }
+//        Set<Role> setrole = user.getRoles();
+//        for (Role role : setrole) {
+//            System.out.println(role.getRole());
+//            if(Objects.equals(role.getRole(), "ROLE_ADMIN")){
+//                role.setId(1L);
+//            }
+//            if(Objects.equals(role.getRole(), "ROLE_USER")){
+//                role.setId(2L);
+//            }
+//        }
+
         userService.save(user);
         return ResponseEntity.ok(HttpStatus.OK);
     }

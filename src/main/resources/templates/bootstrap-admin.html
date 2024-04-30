@@ -300,6 +300,10 @@
             data: JSON.stringify(user),
             dataType: "json",
             contentType: "application/json; charset=utf-8",
+            success: function (data){
+                console.log(data)
+                getTable();
+            }
         });
     }
 
@@ -324,7 +328,7 @@
                 dataToInsert += '</td>';
                 dataToInsert += '</tr>';
             });
-            $("#allUsersTable").append(dataToInsert);
+            $("#allUsersTable").html(dataToInsert);
         });
     }
 </script>
