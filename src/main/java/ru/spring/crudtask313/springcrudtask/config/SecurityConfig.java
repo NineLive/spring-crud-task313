@@ -10,6 +10,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,7 +49,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-//                        .requestMatchers("/admin/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/", "/register").permitAll()
@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.loginProcessingUrl("/login")
                         .successHandler(successUserHandler))
                 .logout(logout -> logout.logoutSuccessUrl("/"));
-
+//                .headers(headers -> headers.contentTypeOptions(HeadersConfigurer.ContentTypeOptionsConfig::disable));
         return http.build();
     }
 }

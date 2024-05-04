@@ -2,13 +2,12 @@ package ru.spring.crudtask313.springcrudtask.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.spring.crudtask313.springcrudtask.dto.UserDTO;
 import ru.spring.crudtask313.springcrudtask.model.Role;
 import ru.spring.crudtask313.springcrudtask.model.User;
 import ru.spring.crudtask313.springcrudtask.repository.RoleRepository;
@@ -38,6 +37,20 @@ public class HomePageController {
     public String register(Model model) {
         model.addAttribute("user", new User());
         return "register";
+    }
+
+    @ResponseBody
+    @GetMapping("/current")
+    public UserDTO test(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return UserDTO.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .lastname(user.getLastname())
+                .age(user.getAge())
+                .email(user.getEmail())
+                .roles(user.getRoles())
+                .build();
     }
 
     @PostMapping()

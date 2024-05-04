@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Admin panel</title>
 </head>
 <body>
 
@@ -27,30 +27,30 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="editUserModalForm">
                     <div class="form-group">
                         <label for="InputIDModal">ID</label>
-                        <input type="text" class="form-control" id="InputIDModal" value=22 readonly>
+                        <input type="text" class="form-control" id="InputIDModal" value=0 name="id" readonly>
                     </div>
                     <div class="form-group">
                         <label for="InputFirstNameModal">First Name</label>
-                        <input type="text" class="form-control" id="InputFirstNameModal" value="name">
+                        <input type="text" class="form-control" id="InputFirstNameModal" value="name" name="name">
                     </div>
                     <div class="form-group">
                         <label for="InputLastNameModal">Last Name</label>
-                        <input type="text" class="form-control" id="InputLastNameModal" value="two name">
+                        <input type="text" class="form-control" id="InputLastNameModal" value="two name" name="lastname">
                     </div>
                     <div class="form-group">
                         <label for="InputAgeModal">Age</label>
-                        <input type="text" class="form-control" id="InputAgeModal" value=322>
+                        <input type="text" class="form-control" id="InputAgeModal" value=123 name="age">
                     </div>
                     <div class="form-group">
                         <label for="InputEmailModal">Email</label>
-                        <input type="email" class="form-control" id="InputEmailModal" value="e@email">
+                        <input type="email" class="form-control" id="InputEmailModal" value="e@email" name="email">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPasswordModal">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPasswordModal">
+                        <input type="password" class="form-control" id="exampleInputPasswordModal" name="password">
                     </div>
                     <div class="form-group">
                         <label for="InputRoleModal">Role</label>
@@ -78,30 +78,30 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="deleteUserModalForm">
                     <div class="form-group">
-                        <label for="DeleteIDModal">ID</label>
-                        <input type="text" class="form-control" id="DeleteIDModal" value=22 readonly>
+                        <label for="idInDeleteModal">ID</label>
+                        <input type="text" class="form-control" id="idInDeleteModal" value=22 readonly>
                     </div>
                     <div class="form-group">
-                        <label for="DeleteFirstNameModal">First Name</label>
-                        <input type="text" class="form-control" id="DeleteFirstNameModal" value="name" readonly>
+                        <label for="firstNameInDeleteModal">First Name</label>
+                        <input type="text" class="form-control" id="firstNameInDeleteModal" value="name" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="DeleteLastNameModal">Last Name</label>
-                        <input type="text" class="form-control" id="DeleteLastNameModal" value="two name" readonly>
+                        <label for="lastNameInDeleteModal">Last Name</label>
+                        <input type="text" class="form-control" id="lastNameInDeleteModal" value="two name" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="DeleteAgeModal">Age</label>
-                        <input type="text" class="form-control" id="DeleteAgeModal" value=322 readonly>
+                        <label for="ageInDeleteModal">Age</label>
+                        <input type="text" class="form-control" id="ageInDeleteModal" value=322 readonly>
                     </div>
                     <div class="form-group">
-                        <label for="DeleteEmailModal">Email</label>
-                        <input type="email" class="form-control" id="DeleteEmailModal" value="e@email" readonly>
+                        <label for="emailInDeleteModal">Email</label>
+                        <input type="email" class="form-control" id="emailInDeleteModal" value="e@email" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="DeleteRoleModal">Role</label>
-                        <select multiple class="form-control" id="DeleteRoleModal" disabled>
+                        <label for="roleInDeleteModal">Role</label>
+                        <select multiple class="form-control" id="roleInDeleteModal" disabled>
                             <option>ADMIN</option>
                             <option>USER</option>
                         </select>
@@ -118,7 +118,7 @@
 
 
 <nav class="navbar bg-dark" >
-    <h3 class="text-light">Admin with roles</h3>
+    <h3 class="text-light" id="adminH3">Admin with roles</h3>
     <a class="text-light" href="/logout">Logout</a>
 </nav>
 
@@ -249,15 +249,7 @@
                                 <th scope="col">Role</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>123</td>
-                                <td>email@mail.ru</td>
-                                <td>ADMIN</td>
-                            </tr>
+                            <tbody id="currentUser">
                             </tbody>
                         </table>
                         </div>
@@ -265,72 +257,9 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 
-<script>
-    $('#addNewUser').click(function () {
-        addNewUser();
-    });
-
-    function addNewUser() {
-        event.preventDefault();
-        let user = {};
-        $('#newUserForm input').each(function(){
-            let attr = $(this)[0].name;
-            let value = $(this)[0].value;
-            user[attr]=value;
-            console.log(attr + ':' + value);
-        })
-
-        let roles = [];
-        for(let oneRole of $('#newUserForm select').val()){
-            let roleObj = {};
-            roleObj['role'] = oneRole;
-            roles.push(roleObj);
-            console.log(roleObj);
-        }
-        user['roles']=roles
-
-        $.ajax({
-            url: "http://localhost:8080/admin",
-            type: "POST",
-            data: JSON.stringify(user),
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data){
-                console.log(data)
-                getTable();
-            }
-        });
-    }
-
-    getTable()
-    function getTable() {
-        $.getJSON("http://localhost:8080/admin/all", function (data) {
-            let dataToInsert = '';
-            $.each(data, function (key) {
-                let user = data[key]
-                dataToInsert += '<tr>';
-                dataToInsert += '<td>' + user.id + '</td>';
-                dataToInsert += '<td>' + user.name + '</td>';
-                dataToInsert += '<td>' + user.lastname + '</td>';
-                dataToInsert += '<td>' + user.age + '</td>';
-                dataToInsert += '<td>' + user.email + '</td>';
-                dataToInsert += '<td>'
-                for (let role of user["roles"]) {
-                    dataToInsert += role.role + " ";
-                }
-                dataToInsert += '<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#editUserModalCenter">Edit</button></td>';
-                dataToInsert += '<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteUserModalCenter">Delete</button></td>';
-                dataToInsert += '</td>';
-                dataToInsert += '</tr>';
-            });
-            $("#allUsersTable").html(dataToInsert);
-        });
-    }
-</script>
+<script src="js/admin.js"></script>
 </body>
 </html>

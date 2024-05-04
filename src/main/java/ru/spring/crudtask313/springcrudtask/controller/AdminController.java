@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.spring.crudtask313.springcrudtask.dto.UserDTO;
 import ru.spring.crudtask313.springcrudtask.model.Role;
 import ru.spring.crudtask313.springcrudtask.model.User;
+import ru.spring.crudtask313.springcrudtask.repository.UserRepository;
 import ru.spring.crudtask313.springcrudtask.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -24,73 +24,50 @@ import java.util.Set;
 @RequestMapping("/admin")
 public class AdminController {
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
-
 
     @GetMapping
     public String getAdminHomePage(Model model) {
         model.addAttribute("users", userService.findAll());
         return "bootstrap-admin";
     }
-    @CrossOrigin
+
     @ResponseBody
     @GetMapping("/all")
     public List<UserDTO> getAllUsers() {
-        List<UserDTO> userDTOs = new ArrayList<>();
-        userService.findAll().forEach(user ->
-                userDTOs.add(UserDTO.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .lastname(user.getLastname())
-                .age(user.getAge())
-                .email(user.getEmail())
-                .roles(user.getRoles())
-                .build()));
-        return userDTOs;
+        return userService.findAll().stream().map(this::convertUserToUserDTO).toList();
     }
 
-
-
-
     @PostMapping()
-    public ResponseEntity<HttpStatus> createUser(@RequestBody @Valid User user, BindingResult bindingResult) {
-        System.out.println(user);
-//        if (bindingResult.hasErrors()) {
-//            return (ResponseEntity<HttpStatus>) ResponseEntity.badRequest();
-//        }
-//        if (!userService.save(user)) {
-//            return (ResponseEntity<HttpStatus>) ResponseEntity.badRequest();
-//        }
-//        Set<Role> setrole = user.getRoles();
-//        for (Role role : setrole) {
-//            System.out.println(role.getRole());
-//            if(Objects.equals(role.getRole(), "ROLE_ADMIN")){
-//                role.setId(1L);
-//            }
-//            if(Objects.equals(role.getRole(), "ROLE_USER")){
-//                role.setId(2L);
-//            }
-//        }
+    public ResponseEntity<HttpStatus> createUser(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
+        }
+        User user = convertUserDTOToUser(userDTO);
+        if (!userService.save(user)) {
+            return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
+        }
 
-        userService.save(user);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<HttpStatus> updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return (ResponseEntity<HttpStatus>) ResponseEntity.badRequest();
+            return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
         }
         try {
-            userService.update(user);
+            userService.update(convertUserDTOToUser(userDTO));
         } catch (DataIntegrityViolationException e) {
-            model.addAttribute("userNameError", "Username already exists");
-            return (ResponseEntity<HttpStatus>) ResponseEntity.badRequest();
+            return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
         }
+
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -98,5 +75,37 @@ public class AdminController {
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable long id) {
         userService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    private User convertUserDTOToUser(UserDTO userDTO) {
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setName(userDTO.getName());
+        user.setLastname(userDTO.getLastname());
+        user.setAge(userDTO.getAge());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        Set<Role> setrole = userDTO.getRoles();
+        for (Role role : setrole) {
+            if (Objects.equals(role.getRole(), "ROLE_ADMIN")) {
+                role.setId(1L);
+            }
+            if (Objects.equals(role.getRole(), "ROLE_USER")) {
+                role.setId(2L);
+            }
+        }
+        user.setRoles(setrole);
+        return user;
+    }
+
+    private UserDTO convertUserToUserDTO(User user) {
+        return UserDTO.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .lastname(user.getLastname())
+                .age(user.getAge())
+                .email(user.getEmail())
+                .roles(user.getRoles())
+                .build();
     }
 }
