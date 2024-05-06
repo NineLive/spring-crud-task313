@@ -9,7 +9,6 @@ $("#allUsersTable").click(function (event){
         modalInputs[i].value = data[i].innerText;
     }
     let arrayRoles = data[5].innerText.split(" ");
-    console.log(arrayRoles);
     modalInputs[5].innerHTML='';
     for (let role of arrayRoles){
         let option = document.createElement('option');

@@ -1,5 +1,6 @@
 package ru.spring.crudtask313.springcrudtask.controller;
 
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -37,7 +38,6 @@ public class AdminController {
         model.addAttribute("users", userService.findAll());
         return "bootstrap-admin";
     }
-
     @ResponseBody
     @GetMapping("/all")
     public List<UserDTO> getAllUsers() {
@@ -75,6 +75,11 @@ public class AdminController {
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable long id) {
         userService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<HttpStatus> handleException(ConstraintViolationException e) {
+        return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
     }
 
     private User convertUserDTOToUser(UserDTO userDTO) {

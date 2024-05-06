@@ -16,6 +16,7 @@ import ru.spring.crudtask313.springcrudtask.service.UserService;
 import java.util.HashSet;
 import java.util.Set;
 
+@CrossOrigin
 @Controller
 @RequestMapping("/")
 public class HomePageController {
