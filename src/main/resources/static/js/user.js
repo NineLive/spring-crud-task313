@@ -1,6 +1,6 @@
 getNavBar();
 function getNavBar() {
-    $.getJSON("http://localhost:8080/current", function (user) {
+    $.getJSON("./current", function (user) {
         let buffer = '';
         buffer += '<strong>' + user.email + '</strong>';
         buffer += ' with roles: '
@@ -13,7 +13,7 @@ function getNavBar() {
 
 getTableForCurrentUser();
 function getTableForCurrentUser() {
-    $.getJSON("http://localhost:8080/current", function (user) {
+    $.getJSON("./current", function (user) {
         let dataToInsert = '';
         dataToInsert += '<tr>';
         dataToInsert += '<td>' + user.id + '</td>';
@@ -30,32 +30,3 @@ function getTableForCurrentUser() {
         $("#currentUser").html(dataToInsert);
     });
 }
-
-// let globalUser = {};
-// function getUser(callback) {
-//     $.getJSON("http://localhost:8080/current", function (user) {
-//         callback(user);
-//     });
-// }
-// function setUser(user) {
-//     globalUser = user;
-// }
-// getUser(setUser);
-// console.log(globalUser);
-//
-// function createTableForUser(user) {
-//     let dataToInsert = '';
-//     dataToInsert += '<tr>';
-//     dataToInsert += '<td>' + user.id + '</td>';
-//     dataToInsert += '<td>' + user.name + '</td>';
-//     dataToInsert += '<td>' + user.lastname + '</td>';
-//     dataToInsert += '<td>' + user.age + '</td>';
-//     dataToInsert += '<td>' + user.email + '</td>';
-//     dataToInsert += '<td>'
-//     for (let role of user["roles"]) {
-//         dataToInsert += role.role.replace('ROLE_', '') + " ";
-//     }
-//     dataToInsert += '</td>';
-//     dataToInsert += '</tr>';
-//     return dataToInsert;
-// }

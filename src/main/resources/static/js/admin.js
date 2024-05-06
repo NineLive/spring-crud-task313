@@ -59,7 +59,7 @@ function addNewUser() {
     user['roles']=roles
 
     $.ajax({
-        url: "http://localhost:8080/admin",
+        url: "./admin",
         type: "POST",
         data: JSON.stringify(user),
         dataType: "json",
@@ -73,7 +73,7 @@ function addNewUser() {
 function deleteUser() {
     let id = $('#idInDeleteModal').val();
     $.ajax({
-        url: `http://localhost:8080/admin/${id}`,
+        url: `./admin/${id}`,
         type: "DELETE",
         success: function (){
             getTable();
@@ -99,7 +99,7 @@ function updateUser() {
     user['roles']=roles
 
     $.ajax({
-        url: `http://localhost:8080/admin/${user.id}`,
+        url: `./admin/${user.id}`,
         type: "PATCH",
         data: JSON.stringify(user),
         dataType: "json",
@@ -113,7 +113,7 @@ function updateUser() {
 
 getTable();
 function getTable() {
-    $.getJSON("http://localhost:8080/admin/all", function (data) {
+    $.getJSON("./admin/all", function (data) {
         let dataToInsert = '';
         $.each(data, function (key) {
             let user = data[key]
@@ -138,7 +138,7 @@ function getTable() {
 
 getNavBar();
 function getNavBar() {
-    $.getJSON("http://localhost:8080/current", function (user) {
+    $.getJSON("./current", function (user) {
         let buffer = '';
         buffer += '<strong>' + user.email + '</strong>';
         buffer += ' with roles: '
@@ -151,7 +151,7 @@ function getNavBar() {
 
 getTableForCurrentUser();
 function getTableForCurrentUser() {
-    $.getJSON("http://localhost:8080/current", function (user) {
+    $.getJSON("./current", function (user) {
         let dataToInsert = '';
         dataToInsert += '<tr>';
         dataToInsert += '<td>' + user.id + '</td>';

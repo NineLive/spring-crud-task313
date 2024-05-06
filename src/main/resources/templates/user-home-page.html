@@ -20,21 +20,24 @@
     <a class="text-light" href="/logout">Logout</a>
 </nav>
 
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left: 0; padding-top: 0px;">
     <div class="row">
-        <div class="col-2">
+        <div class="col-2" style="padding-top: 15px; padding-right: 0">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">User</a>
             </div>
         </div>
-        <div class="col-10">
-            <p class="h1">User information page</p>
-            <div data-comment="ТУТ РАМКА ВОКРУГ ТАЛИЦЫ">
+
+        <div class="col-10" style="padding-top: 15px; background: #f8f9fa; min-height: 100vh;">
+            <div class="col-10">
                 <div class="row">
-                    <p class="h3">About user</p>
+                    <div class="col-12"><p class="h1">User information-page</p></div>
                 </div>
-                <div class="row">
-                    <table class="table table-striped">
+                <div class="row" style="background: #f7f7f7;border: 2px solid #eeeeef;margin-right: 0; margin-left: 0;">
+                    <p class="h4" style="margin-left: 10px;margin-top: 10px;margin-bottom: 10px;">About user</p>
+                </div>
+                <div class="row" style="border: 2px solid #eeeeef;margin-right: 0; margin-left: 0; background: white">
+                    <table class="table table-striped" style="margin: 25px;">
                         <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -46,6 +49,14 @@
                         </tr>
                         </thead>
                         <tbody id="currentUser">
+                            <tr>
+                                <td>1</td>
+                                <td>adm</td>
+                                <td>frank</td>
+                                <td>1</td>
+                                <td>adm@adm</td>
+                                <td>ADMIN </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
