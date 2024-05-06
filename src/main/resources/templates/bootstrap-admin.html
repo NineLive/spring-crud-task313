@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="css/admin.css" type="text/css" />
     <title>Admin panel</title>
 </head>
 <body>
@@ -123,15 +123,15 @@
 </nav>
 
 
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left: 0; padding-top: 0px;">
     <div class="row">
-        <div class="col-2">
+        <div class="col-2" style="padding-top: 15px; padding-right: 0">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Admin</a>
                 <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">User</a>
             </div>
         </div>
-        <div class="col-10">
+        <div class="col-10" style="padding-top: 15px; background: #f8f9fa; min-height: 100vh;">
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                     <div class="col-10">
@@ -151,11 +151,11 @@
                                 </ul>
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="users-table" role="tabpanel" aria-labelledby="users-table-tab">
-                                        <div class="row">
-                                            <p class="h4">All users</p>
+                                        <div class="row" style="background: #f7f7f7;border: 2px solid #eeeeef;margin-right: 0; margin-left: 0;">
+                                            <p class="h4" style="margin-left: 10px;margin-top: 10px;margin-bottom: 10px;">All users</p>
                                         </div>
-                                        <div class="row">
-                                            <table class="table table-striped">
+                                        <div class="row" style="border: 2px solid #eeeeef;margin-right: 0; margin-left: 0; background: white">
+                                            <table class="table table-striped" style="margin: 25px;">
                                                 <thead>
                                                 <tr>
                                                     <th scope="col">ID</th>
@@ -175,23 +175,14 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="new-user" role="tabpanel" aria-labelledby="new-user-tab">
-                                        <div class="container-fluid">
-
-                                            <div class="row">
-
-                                                <div class="col-12 bg-light">
-                                                    <nav class="navbar navbar-expand-lg bg-light" aria-label="breadcrumb">
-                                                    <p class="h4">Add new user</p>
-                                                </nav>
-                                                </div>
-
+                                        <div class="container-fluid" style="padding-right: 0; padding-left: 0">
+                                            <div class="row" style="background: #f7f7f7;border: 2px solid #eeeeef;margin-right: 0; margin-left: 0;">
+                                                <p class="h4" style="margin-left: 10px;margin-top: 10px;margin-bottom: 10px;">Add new user</p>
                                             </div>
-
-                                            <div class="row bg-white">
-                                                <div class="col-4"></div>
-                                                <div class="col-4">
+                                            <div class="row justify-content-center" style="border: 2px solid #eeeeef;margin-right: 0; margin-left: 0; background: white">
+                                                <div class="col-4" style="text-align: center;">
                                                     <form id="newUserForm">
-                                                    <div class="form-group">
+                                                    <div class="form-group" >
                                                         <label for="InputFirstName">First Name</label>
                                                         <input type="text" class="form-control" id="InputFirstName" placeholder="Enter first name" name="name">
                                                     </div>
@@ -218,10 +209,11 @@
                                                             <option>ROLE_USER</option>
                                                         </select>
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary" id="addNewUser">Add new user</button>
+                                                    <div style="padding-bottom: 1rem;">
+                                                        <button type="submit" class="btn btn-success" id="addNewUser">Add new user</button>
+                                                    </div>
                                                 </form>
                                                 </div>
-                                                <div class="col-4"></div>
                                             </div>
                                         </div>
                                     </div>
