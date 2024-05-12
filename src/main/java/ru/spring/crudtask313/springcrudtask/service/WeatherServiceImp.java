@@ -27,8 +27,6 @@ public class WeatherServiceImp {
     public boolean checkRain(String address) {
         Map<String, String> coordsMap = getCoordinates(address);
         String precType = getWeatherByCoordinates(coordsMap);
-
-        //Проверяем по типу осадков наличие дождя т.к. дождь бывает и при влажности 40
         return precType.equals("RAIN");
     }
 
