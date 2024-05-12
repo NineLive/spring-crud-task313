@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class WeatherServiceImp {
+public class WeatherServiceImp implements WeatherService {
     private final ApiProperties apiProperties;
 
     @Autowired
@@ -26,7 +26,7 @@ public class WeatherServiceImp {
 
     public boolean checkRain(String address) {
         Map<String, String> coordsMap = getCoordinates(address);
-        String precType = getWeatherByCoordinates(coordsMap);
+        String precType = getPrecipitationTypeByCoordinates(coordsMap);
         return precType.equals("RAIN");
     }
 
@@ -58,7 +58,7 @@ public class WeatherServiceImp {
         }
     }
 
-    public String getWeatherByCoordinates(Map<String, String> coordinates) {
+    public String getPrecipitationTypeByCoordinates(Map<String, String> coordinates) {
         String longitude = coordinates.get("longitude");
         String latitude = coordinates.get("latitude");
 

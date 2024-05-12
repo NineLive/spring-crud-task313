@@ -13,7 +13,7 @@ import ru.spring.crudtask313.springcrudtask.model.Role;
 import ru.spring.crudtask313.springcrudtask.model.User;
 import ru.spring.crudtask313.springcrudtask.repository.RoleRepository;
 import ru.spring.crudtask313.springcrudtask.service.UserService;
-import ru.spring.crudtask313.springcrudtask.service.WeatherServiceImp;
+import ru.spring.crudtask313.springcrudtask.service.WeatherService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,10 +24,10 @@ import java.util.Set;
 public class HomePageController {
     private final UserService userService;
     private final RoleRepository roleRepository;
-    private final WeatherServiceImp weatherService;
+    private final WeatherService weatherService;
 
     @Autowired
-    public HomePageController(UserService userService, RoleRepository roleRepository, WeatherServiceImp weatherService) {
+    public HomePageController(UserService userService, RoleRepository roleRepository, WeatherService weatherService) {
         this.userService = userService;
         this.roleRepository = roleRepository;
         this.weatherService = weatherService;
