@@ -8,10 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.spring.crudtask313.springcrudtask.dto.UserDTO;
+import ru.spring.crudtask313.springcrudtask.dto.WeatherDTO;
 import ru.spring.crudtask313.springcrudtask.model.Role;
 import ru.spring.crudtask313.springcrudtask.model.User;
 import ru.spring.crudtask313.springcrudtask.repository.RoleRepository;
 import ru.spring.crudtask313.springcrudtask.service.UserService;
+import ru.spring.crudtask313.springcrudtask.service.WeatherServiceImp;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,11 +24,13 @@ import java.util.Set;
 public class HomePageController {
     private final UserService userService;
     private final RoleRepository roleRepository;
+    private final WeatherServiceImp weatherService;
 
     @Autowired
-    public HomePageController(UserService userService, RoleRepository roleRepository) {
+    public HomePageController(UserService userService, RoleRepository roleRepository, WeatherServiceImp weatherService) {
         this.userService = userService;
         this.roleRepository = roleRepository;
+        this.weatherService = weatherService;
     }
 
     @GetMapping()
@@ -43,14 +47,26 @@ public class HomePageController {
     @ResponseBody
     @GetMapping("/current")
     public UserDTO test(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
+        User userPrincipal = (User) authentication.getPrincipal();
+        User user = userService.findById(userPrincipal.getId()).get();
         return UserDTO.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .lastname(user.getLastname())
                 .age(user.getAge())
                 .email(user.getEmail())
+                .address(user.getAddress())
                 .roles(user.getRoles())
+                .build();
+    }
+
+    @ResponseBody
+    @GetMapping("/weather/{id}")
+    public WeatherDTO getWeather(@PathVariable long id){
+        User user = userService.findById(id).get();
+        return WeatherDTO.builder()
+                .address(user.getAddress())
+                .hasRain(weatherService.checkRain(user.getAddress()))
                 .build();
     }
 

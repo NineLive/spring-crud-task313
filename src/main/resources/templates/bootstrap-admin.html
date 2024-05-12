@@ -49,6 +49,10 @@
                         <input type="email" class="form-control" id="InputEmailModal" value="e@email" name="email">
                     </div>
                     <div class="form-group">
+                        <label for="InputAddressModal">Address</label>
+                        <input type="text" class="form-control" id="InputAddressModal" value="улица Семёна Середы, 21, Рязань" name="address">
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputPasswordModal">Password</label>
                         <input type="password" class="form-control" id="exampleInputPasswordModal" name="password">
                     </div>
@@ -63,7 +67,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-info">Edit</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Edit</button>
             </div>
         </div>
     </div>
@@ -100,6 +104,10 @@
                         <input type="email" class="form-control" id="emailInDeleteModal" value="e@email" readonly>
                     </div>
                     <div class="form-group">
+                        <label for="addressInDeleteModal">Address</label>
+                        <input type="text" class="form-control" id="addressInDeleteModal" value="улица Семёна Середы, 21, Рязань" name="address" readonly>
+                    </div>
+                    <div class="form-group">
                         <label for="roleInDeleteModal">Role</label>
                         <select multiple class="form-control" id="roleInDeleteModal" disabled>
                             <option>ADMIN</option>
@@ -110,13 +118,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
             </div>
         </div>
     </div>
 </div>
 
-
+<!-- Navbar -->
 <nav class="navbar bg-dark" >
     <h3 class="text-light" id="adminH3">Admin with roles</h3>
     <a class="text-light" href="/logout">Logout</a>
@@ -127,13 +135,13 @@
     <div class="row">
         <div class="col-2" style="padding-top: 15px; padding-right: 0">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Admin</a>
-                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">User</a>
+                <a class="nav-link active" id="v-pills-admin-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Admin</a>
+                <a class="nav-link" id="v-pills-user-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">User</a>
             </div>
         </div>
         <div class="col-10" style="padding-top: 15px; background: #f8f9fa; min-height: 100vh;">
             <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-admin-tab">
                     <div class="col-10">
                         <div class="row">
                             <div class="col-12"><p class="h1">Admin panel</p></div>
@@ -163,6 +171,7 @@
                                                     <th scope="col">Last name</th>
                                                     <th scope="col">Age</th>
                                                     <th scope="col">Email</th>
+                                                    <th scope="col">Address</th>
                                                     <th scope="col">Role</th>
                                                     <th scope="col">Edit</th>
                                                     <th scope="col">Delete</th>
@@ -199,6 +208,10 @@
                                                         <input type="email" class="form-control" id="InputEmail" placeholder="Enter email" name="email">
                                                     </div>
                                                     <div class="form-group">
+                                                        <label for="InputAddress">Address</label>
+                                                        <input type="text" class="form-control" id="InputAddress" placeholder="Enter address" name="address">
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="InputPassword">Password</label>
                                                         <input type="password" class="form-control" id="InputPassword" placeholder="Password" name="password">
                                                     </div>
@@ -222,7 +235,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-user-tab">
                     <div class="col-10">
                         <div class="row">
                             <div class="col-12"><p class="h1">User information-page</p></div>
@@ -239,10 +252,22 @@
                                     <th scope="col">Last name</th>
                                     <th scope="col">Age</th>
                                     <th scope="col">Email</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Weather</th>
                                     <th scope="col">Role</th>
                                 </tr>
                                 </thead>
                                 <tbody id="currentUser">
+                                <tr>
+                                    <td>1</td>
+                                    <td>adm</td>
+                                    <td>frank</td>
+                                    <td>1</td>
+                                    <td>adm@adm</td>
+                                    <td>ул Пушкина дом Колотушкина</td>
+                                    <td id="rain">rain</td>
+                                    <td>ADMIN </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

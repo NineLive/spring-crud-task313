@@ -28,10 +28,15 @@ public class User implements UserDetails {
     @Size(min = 2, max = 20, message = "Name length should be between 2-30 characters")
     private String name;
 
-    @Column(unique = true)
+    @Column
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 2, max = 20, message = "Name length should be between 2-30 characters")
     private String lastname;
+
+    @Column
+    @NotEmpty(message = "Address should not be empty")
+    @Size(min = 2, message = "Address length should be greater 2 characters")
+    private String address;
 
     @Column
     @NotEmpty(message = "Password should not be empty")

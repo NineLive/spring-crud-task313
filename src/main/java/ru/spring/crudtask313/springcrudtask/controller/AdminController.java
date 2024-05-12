@@ -89,6 +89,7 @@ public class AdminController {
         user.setLastname(userDTO.getLastname());
         user.setAge(userDTO.getAge());
         user.setEmail(userDTO.getEmail());
+        user.setAddress(userDTO.getAddress());
         user.setPassword(userDTO.getPassword());
         Set<Role> setrole = userDTO.getRoles();
         for (Role role : setrole) {
@@ -110,6 +111,7 @@ public class AdminController {
                 .lastname(user.getLastname())
                 .age(user.getAge())
                 .email(user.getEmail())
+                .address(user.getAddress())
                 .roles(user.getRoles())
                 .build();
     }

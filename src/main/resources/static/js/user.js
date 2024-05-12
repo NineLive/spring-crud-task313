@@ -14,6 +14,7 @@ function getNavBar() {
 getTableForCurrentUser();
 function getTableForCurrentUser() {
     $.getJSON("./current", function (user) {
+
         let dataToInsert = '';
         dataToInsert += '<tr>';
         dataToInsert += '<td>' + user.id + '</td>';
@@ -21,6 +22,8 @@ function getTableForCurrentUser() {
         dataToInsert += '<td>' + user.lastname + '</td>';
         dataToInsert += '<td>' + user.age + '</td>';
         dataToInsert += '<td>' + user.email + '</td>';
+        dataToInsert += '<td>' + user.address + '</td>';
+        dataToInsert += '<td id="rain">' + '</td>';
         dataToInsert += '<td>'
         for (let role of user["roles"]) {
             dataToInsert += role.role.replace('ROLE_', '') + " ";
@@ -28,5 +31,16 @@ function getTableForCurrentUser() {
         dataToInsert += '</td>';
         dataToInsert += '</tr>';
         $("#currentUser").html(dataToInsert);
+        checkRain(user.id);
+    });
+}
+
+function checkRain(id){
+    $.getJSON(`./weather/${id}`, function (data) {
+        if (data.hasRain){
+            $("#rain").html("&#9730;");
+        } else {
+            $("#rain").html("&#127774;");
+        }
     });
 }
