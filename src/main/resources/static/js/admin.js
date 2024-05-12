@@ -2,6 +2,14 @@ $('#addNewUser').click(function () {
     addNewUser();
 });
 
+$("button.btn-danger:nth-child(2)").click(function (){
+    deleteUser();
+})
+
+$("button.btn-info:nth-child(2)").click(function (){
+    updateUser();
+})
+
 //Заполнение модальных окон инфой
 // DELETE окно
 $("#allUsersTable").click(function (event){
@@ -43,13 +51,7 @@ $("#allUsersTable").click(function (event){
     modalInputs[7].append(options["USER"]);
 })
 
-$("button.btn-danger:nth-child(2)").click(function (){
-    deleteUser();
-})
 
-$("button.btn-info:nth-child(2)").click(function (){
-    updateUser();
-})
 
 function addNewUser() {
     event.preventDefault();
