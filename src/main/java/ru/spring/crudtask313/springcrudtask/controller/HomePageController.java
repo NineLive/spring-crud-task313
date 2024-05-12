@@ -62,7 +62,7 @@ public class HomePageController {
 
     @ResponseBody
     @GetMapping("/weather/{id}")
-    public WeatherDTO getWeather(@PathVariable long id){
+    public WeatherDTO getWeather(@PathVariable long id) {
         User user = userService.findById(id).get();
         return WeatherDTO.builder()
                 .address(user.getAddress())

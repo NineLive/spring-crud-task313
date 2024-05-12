@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import ru.spring.crudtask313.springcrudtask.config.ApiProperties;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,10 +18,12 @@ import java.util.Map;
 @Service
 public class WeatherServiceImp {
     private UserService userService;
+    private ApiProperties apiProperties;
 
     @Autowired
-    public WeatherServiceImp(UserService userService) {
+    public WeatherServiceImp(UserService userService , ApiProperties apiProperties) {
         this.userService = userService;
+        this.apiProperties = apiProperties;
     }
 
     public boolean checkRain(String address) {
@@ -37,9 +40,10 @@ public class WeatherServiceImp {
     public Map<String, String> getCoordinates(String address) {
         //Запрос в geocoder для получения кординат по адресу
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://geocode-maps.yandex.ru/1.x/";
-        String apiKey = "a497c06f-73d1-48ea-be08-e6e69a18c7bc";
-
+//        String url = "https://geocode-maps.yandex.ru/1.x/";
+        String url = apiProperties.getGeoCoderUrl();
+//        String apiKey = "a497c06f-73d1-48ea-be08-e6e69a18c7bc";
+        String apiKey = apiProperties.getGeoCoderApikey();
         url += "?" + "apikey=" + apiKey;
         url += "&" + "geocode=" + address;
         url += "&" + "lang=ru_RU";
@@ -70,8 +74,10 @@ public class WeatherServiceImp {
         String latitude = coordinates.get("latitude");
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://api.weather.yandex.ru/graphql/query";
-        String apiKey = "3a2de6dd-0c4d-42c5-83cf-7bf6d2ef9ffd";
+//        String url = "https://api.weather.yandex.ru/graphql/query";
+        String url = apiProperties.getWeatherUrl();
+//        String apiKey = "3a2de6dd-0c4d-42c5-83cf-7bf6d2ef9ffd";
+        String apiKey = apiProperties.getWeatherApikey();
         String graphQlQuery = "{\"query\":\"{\\n  weatherByPoint(request: {lat: %s, lon: %s}) {\\n    now {\\n      precType\\n    }\\n  }\\n}\"}".formatted(latitude, longitude);
 
         HttpHeaders headers = new HttpHeaders();
