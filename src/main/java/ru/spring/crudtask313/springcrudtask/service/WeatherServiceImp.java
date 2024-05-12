@@ -17,12 +17,10 @@ import java.util.Map;
 
 @Service
 public class WeatherServiceImp {
-    private UserService userService;
-    private ApiProperties apiProperties;
+    private final ApiProperties apiProperties;
 
     @Autowired
-    public WeatherServiceImp(UserService userService , ApiProperties apiProperties) {
-        this.userService = userService;
+    public WeatherServiceImp(ApiProperties apiProperties) {
         this.apiProperties = apiProperties;
     }
 
@@ -30,12 +28,11 @@ public class WeatherServiceImp {
         Map<String, String> coordsMap = getCoordinates(address);
         String precType = getWeatherByCoordinates(coordsMap);
 
-        //Проверяем есть ли дождь по влажности(влажность лажа, проверям по типу осадков)
+        //Проверяем по типу осадков наличие дождя т.к. влажность>70 бывает и без дождя
         return precType.equals("RAIN");
     }
 
     public Map<String, String> getCoordinates(String address) {
-        //Запрос в geocoder для получения кординат по адресу
         RestTemplate restTemplate = new RestTemplate();
         String url = apiProperties.getGeoCoderUrl();
         String apiKey = apiProperties.getGeoCoderApikey();
@@ -64,7 +61,6 @@ public class WeatherServiceImp {
     }
 
     public String getWeatherByCoordinates(Map<String, String> coordinates) {
-        //Запрос в яндекс для получения погоды по координатам
         String longitude = coordinates.get("longitude");
         String latitude = coordinates.get("latitude");
 
