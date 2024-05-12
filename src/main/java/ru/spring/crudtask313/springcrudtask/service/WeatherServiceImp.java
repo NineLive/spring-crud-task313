@@ -27,10 +27,7 @@ public class WeatherServiceImp {
     }
 
     public boolean checkRain(String address) {
-        //Запрос в dadata для получения кординат
         Map<String, String> coordsMap = getCoordinates(address);
-
-        //Запрос в яндекс для полчения погоды
         String precType = getWeatherByCoordinates(coordsMap);
 
         //Проверяем есть ли дождь по влажности(влажность лажа, проверям по типу осадков)
