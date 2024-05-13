@@ -2,10 +2,10 @@ spring:
   application:
     name: spring-crud-task
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://127.0.0.1:5432/test
+    url: jdbc:postgresql://${CRUD_DB_HOST:localhost}:${CRUD_DB_PORT:5432}/test
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   mvc:
     hiddenmethod:
       filter:
