@@ -1,10 +1,12 @@
 package ru.spring.crudtask313.springcrudtask.service;
 
 
+import ru.spring.crudtask313.springcrudtask.util.Coordinates;
+
 import java.util.Map;
 
 public interface WeatherService {
     boolean checkRain(String address);
-    Map<String, String> getCoordinates(String address);
-    String getPrecipitationTypeByCoordinates(Map<String, String> coordinates);
+
+    String getPrecipitationTypeByCoordinates(Coordinates coordinates);
 }

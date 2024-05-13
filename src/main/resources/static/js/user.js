@@ -1,10 +1,11 @@
 getNavBar();
+
 function getNavBar() {
     $.getJSON("./current", function (user) {
         let buffer = '';
         buffer += '<strong>' + user.email + '</strong>';
         buffer += ' with roles: '
-        for (let nameRole of user.roles){
+        for (let nameRole of user.roles) {
             buffer += nameRole.role.replace('ROLE_', '') + ' ';
         }
         $("#userH3").html(buffer);
@@ -12,6 +13,7 @@ function getNavBar() {
 }
 
 getTableForCurrentUser();
+
 function getTableForCurrentUser() {
     $.getJSON("./current", function (user) {
 
@@ -31,16 +33,12 @@ function getTableForCurrentUser() {
         dataToInsert += '</td>';
         dataToInsert += '</tr>';
         $("#currentUser").html(dataToInsert);
-        checkRain(user.id);
-    });
-}
 
-function checkRain(id){
-    $.getJSON(`./weather/${id}`, function (data) {
-        if (data.hasRain){
+        if (user.addressHasRain) {
             $("#rain").html("&#9730;");
         } else {
             $("#rain").html("&#127774;");
         }
     });
 }
+

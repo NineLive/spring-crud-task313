@@ -20,7 +20,7 @@ public class UserDTO {
     private int age;
     private String email;
     private String address;
-//    private String weather;
+    private boolean addressHasRain;
     private String password;
     private Set<Role> roles;
 }

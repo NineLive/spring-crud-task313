@@ -4,8 +4,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://127.0.0.1:5432/test
-    username: postgres
-    password: postgres
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
   mvc:
     hiddenmethod:
       filter:
@@ -18,8 +18,14 @@ spring:
         hbm2ddl:
           auto: update
 
-apiproperties:
-  geo-coder-url: https://geocode-maps.yandex.ru/1.x/
-  geo-coder-apikey: a497c06f-73d1-48ea-be08-e6e69a18c7bc
-  weather-url: https://api.weather.yandex.ru/graphql/query
-  weather-apikey: 3a2de6dd-0c4d-42c5-83cf-7bf6d2ef9ffd
+
+geocoder:
+  url: https://geocode-maps.yandex.ru/1.x/
+  apikey: ${API_KEY_GEO_CODER}
+
+
+weather:
+  url: https://api.weather.yandex.ru/graphql/query
+  apikey: ${API_KEY_WEATHER}
+
+

@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.spring.crudtask313.springcrudtask.dto.UserDTO;
-import ru.spring.crudtask313.springcrudtask.dto.WeatherDTO;
 import ru.spring.crudtask313.springcrudtask.model.Role;
 import ru.spring.crudtask313.springcrudtask.model.User;
 import ru.spring.crudtask313.springcrudtask.repository.RoleRepository;
@@ -56,17 +55,8 @@ public class HomePageController {
                 .age(user.getAge())
                 .email(user.getEmail())
                 .address(user.getAddress())
+                .addressHasRain(weatherService.checkRain(user.getAddress()))
                 .roles(user.getRoles())
-                .build();
-    }
-
-    @ResponseBody
-    @GetMapping("/weather/{id}")
-    public WeatherDTO getWeather(@PathVariable long id) {
-        User user = userService.findById(id).get();
-        return WeatherDTO.builder()
-                .address(user.getAddress())
-                .hasRain(weatherService.checkRain(user.getAddress()))
                 .build();
     }
 

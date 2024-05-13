@@ -2,40 +2,40 @@ $('#addNewUser').click(function () {
     addNewUser();
 });
 
-$("button.btn-danger:nth-child(2)").click(function (){
+$("button.btn-danger:nth-child(2)").click(function () {
     deleteUser();
 })
 
-$("button.btn-info:nth-child(2)").click(function (){
+$("button.btn-info:nth-child(2)").click(function () {
     updateUser();
 })
 
 //Заполнение модальных окон инфой
 // DELETE окно
-$("#allUsersTable").click(function (event){
+$("#allUsersTable").click(function (event) {
     let data = event.target.parentElement.parentElement.children;
     let modalInputs = $("#deleteUserModalForm :input");
-    for (let i=0; i < modalInputs.length - 1; i++){
+    for (let i = 0; i < modalInputs.length - 1; i++) {
         modalInputs[i].value = data[i].innerText;
     }
     let arrayRoles = data[5].innerText.split(" ");
-    modalInputs[5].innerHTML='';
-    for (let role of arrayRoles){
+    modalInputs[5].innerHTML = '';
+    for (let role of arrayRoles) {
         let option = document.createElement('option');
         option.innerHTML = role;
         modalInputs[5].append(option);
     }
 })
 // EDIT окно
-$("#allUsersTable").click(function (event){
+$("#allUsersTable").click(function (event) {
     let data = event.target.parentElement.parentElement.children;
     let modalInputs = $("#editUserModalForm :input");
-    for (let i=0; i < modalInputs.length - 2; i++){
+    for (let i = 0; i < modalInputs.length - 2; i++) {
         modalInputs[i].value = data[i].innerText;
     }
     let arrayRoles = data[6].innerText.split(" ");
     //очищаем select с ролями
-    modalInputs[7].innerHTML='';
+    modalInputs[7].innerHTML = '';
     let options = new Map;
     options["USER"] = document.createElement('option');
     options["USER"].innerHTML = 'USER';
@@ -43,7 +43,7 @@ $("#allUsersTable").click(function (event){
     options["ADMIN"] = document.createElement('option');
     options["ADMIN"].innerHTML = 'ADMIN';
     options["ADMIN"].value = 'ROLE_ADMIN';
-    for (let role of arrayRoles){
+    for (let role of arrayRoles) {
         options[role].selected = true;
     }
     //добавляем роли в select, текущие роли будут выбраны
@@ -52,23 +52,22 @@ $("#allUsersTable").click(function (event){
 })
 
 
-
 function addNewUser() {
     event.preventDefault();
     let user = {};
-    $('#newUserForm input').each(function(){
+    $('#newUserForm input').each(function () {
         let attr = $(this)[0].name;
         let value = $(this)[0].value;
-        user[attr]=value;
+        user[attr] = value;
     })
 
     let roles = [];
-    for(let oneRole of $('#newUserForm select').val()){
+    for (let oneRole of $('#newUserForm select').val()) {
         let roleObj = {};
         roleObj['role'] = oneRole;
         roles.push(roleObj);
     }
-    user['roles']=roles
+    user['roles'] = roles
 
     $.ajax({
         url: "./admin",
@@ -76,7 +75,7 @@ function addNewUser() {
         data: JSON.stringify(user),
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function (){
+        success: function () {
             getTable();
         }
     });
@@ -87,7 +86,7 @@ function deleteUser() {
     $.ajax({
         url: `./admin/${id}`,
         type: "DELETE",
-        success: function (){
+        success: function () {
             getTable();
         }
     });
@@ -95,19 +94,19 @@ function deleteUser() {
 
 function updateUser() {
     let user = {};
-    $('#editUserModalForm input').each(function(){
+    $('#editUserModalForm input').each(function () {
         let attr = $(this)[0].name;
         let value = $(this)[0].value;
-        user[attr]=value;
+        user[attr] = value;
     })
 
     let roles = [];
-    for(let oneRole of $('#editUserModalForm select').val()){
+    for (let oneRole of $('#editUserModalForm select').val()) {
         let roleObj = {};
         roleObj['role'] = oneRole;
         roles.push(roleObj);
     }
-    user['roles']=roles
+    user['roles'] = roles
 
     $.ajax({
         url: `./admin/${user.id}`,
@@ -115,7 +114,7 @@ function updateUser() {
         data: JSON.stringify(user),
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function (){
+        success: function () {
             getTable();
             getTableForCurrentUser();
         }
@@ -124,6 +123,7 @@ function updateUser() {
 
 
 getTable();
+
 function getTable() {
     $.getJSON("./admin/all", function (data) {
         let dataToInsert = '';
@@ -150,12 +150,13 @@ function getTable() {
 }
 
 getNavBar();
+
 function getNavBar() {
     $.getJSON("./current", function (user) {
         let buffer = '';
         buffer += '<strong>' + user.email + '</strong>';
         buffer += ' with roles: '
-        for (let nameRole of user.roles){
+        for (let nameRole of user.roles) {
             buffer += nameRole.role.replace('ROLE_', '') + ' ';
         }
         $("#adminH3").html(buffer);
@@ -163,6 +164,7 @@ function getNavBar() {
 }
 
 getTableForCurrentUser();
+
 function getTableForCurrentUser() {
     $.getJSON("./current", function (user) {
         let dataToInsert = '';
@@ -181,13 +183,8 @@ function getTableForCurrentUser() {
         dataToInsert += '</td>';
         dataToInsert += '</tr>';
         $("#currentUser").html(dataToInsert);
-        checkRain(user.id);
-    });
-}
 
-function checkRain(id){
-    $.getJSON(`./weather/${id}`, function (data) {
-        if (data.hasRain){
+        if (user.addressHasRain) {
             $("#rain").html("&#9730;");
         } else {
             $("#rain").html("&#127774;");
