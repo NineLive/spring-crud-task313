@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,9 +25,9 @@ public class WeatherServiceImp implements WeatherService {
         this.weatherProperties = weatherProperties;
     }
 
+    @Cacheable(value = "address", key = "#address")
     public boolean checkRain(String address) {
         Coordinates coords = geoCoderService.getCoordinatesByAddress(address);
-        System.out.println(coords);
         String precType = getPrecipitationTypeByCoordinates(coords);
         return precType.equals("RAIN");
     }
