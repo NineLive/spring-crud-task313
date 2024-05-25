@@ -1,0 +1,22 @@
+services:
+  web:
+    image: ninelive/crud:backend
+    container_name: backend-container
+    ports:
+      - "8089:8080"
+    environment:
+      CRUD_DB_HOST: db
+      CRUD_DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      API_KEY_GEO_CODER: ${API_KEY_GEO_CODER}
+      API_KEY_WEATHER: ${API_KEY_WEATHER}
+    depends_on:
+      - db
+  db:
+    image: "postgres:latest"
+    container_name: postgres-db-container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
