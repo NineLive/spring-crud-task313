@@ -28,7 +28,8 @@ public class WeatherServiceImp implements WeatherService {
     @Cacheable(value = "address", key = "#address")
     public boolean checkRain(String address) {
         Coordinates coords = geoCoderService.getCoordinatesByAddress(address);
-        String precType = getPrecipitationTypeByCoordinates(coords);
+//        String precType = getPrecipitationTypeByCoordinates(coords);
+        String precType = "RAIN";
         return precType.equals("RAIN");
     }
 

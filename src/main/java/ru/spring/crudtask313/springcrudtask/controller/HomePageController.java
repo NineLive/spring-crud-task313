@@ -65,7 +65,7 @@ public class HomePageController {
         if (bindingResult.hasErrors()) {
             return "register";
         }
-        Role role = roleRepository.findByRole("ROLE_USER");
+        Role role = roleRepository.findByRole("ROLE_USER").get();
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(role);
         user.setRoles(roleSet);
