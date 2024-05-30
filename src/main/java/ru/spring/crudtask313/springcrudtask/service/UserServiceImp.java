@@ -1,8 +1,11 @@
 package ru.spring.crudtask313.springcrudtask.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,6 +42,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public Optional<User> findById(long id) {
         return userRepository.findById(id);
+    }
+
+
+    public Page<User> findByAgeGreaterThanEqual(int age, Pageable pageable) {
+        return userRepository.findByAgeGreaterThanEqual(age, pageable);
     }
 
     @Override

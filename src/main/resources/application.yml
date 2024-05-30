@@ -17,6 +17,18 @@ spring:
         show_sql: true
         hbm2ddl:
           auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sergey.chesnokov9@gmail.com
+    password: ofpuyiobibqnkziy
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
 
 
 geocoder:

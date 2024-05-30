@@ -2,6 +2,7 @@ package ru.spring.crudtask313.springcrudtask.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +12,13 @@ import ru.spring.crudtask313.springcrudtask.dto.UserDTO;
 import ru.spring.crudtask313.springcrudtask.model.Role;
 import ru.spring.crudtask313.springcrudtask.model.User;
 import ru.spring.crudtask313.springcrudtask.repository.RoleRepository;
+import ru.spring.crudtask313.springcrudtask.service.AdvertisingServiceImp;
+import ru.spring.crudtask313.springcrudtask.service.EmailService;
 import ru.spring.crudtask313.springcrudtask.service.UserService;
 import ru.spring.crudtask313.springcrudtask.service.WeatherService;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @CrossOrigin
@@ -24,12 +28,16 @@ public class HomePageController {
     private final UserService userService;
     private final RoleRepository roleRepository;
     private final WeatherService weatherService;
+    private EmailService emailService;
+    private AdvertisingServiceImp advertisingServiceImp;
 
     @Autowired
-    public HomePageController(UserService userService, RoleRepository roleRepository, WeatherService weatherService) {
+    public HomePageController(UserService userService, RoleRepository roleRepository, WeatherService weatherService, EmailService emailService, AdvertisingServiceImp advertisingServiceImp) {
         this.userService = userService;
         this.roleRepository = roleRepository;
         this.weatherService = weatherService;
+        this.emailService = emailService;
+        this.advertisingServiceImp = advertisingServiceImp;
     }
 
     @GetMapping()
@@ -74,5 +82,18 @@ public class HomePageController {
             return "register";
         }
         return "redirect:/user";
+    }
+
+    @ResponseBody
+    @GetMapping("/sendmail/{age}")
+    public String sendEmail(@PathVariable Integer age){
+        int pageNumber = 0;
+        int pageSize = 5;
+        Page<User> pageUsers = advertisingServiceImp.getPageUsersFilteredByMinAge(age, pageNumber, pageSize);
+        while (pageNumber <= pageUsers.getTotalPages()) {
+            advertisingServiceImp.makeSpam(pageUsers.toList());
+            pageUsers = advertisingServiceImp.getPageUsersFilteredByMinAge(age, ++pageNumber, pageSize);
+        }
+        return "SPAM SPAM";
     }
 }
