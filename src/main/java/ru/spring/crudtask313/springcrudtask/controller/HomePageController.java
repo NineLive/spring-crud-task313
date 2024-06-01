@@ -83,17 +83,4 @@ public class HomePageController {
         }
         return "redirect:/user";
     }
-
-    @ResponseBody
-    @GetMapping("/sendmail/{age}")
-    public String sendEmail(@PathVariable Integer age){
-        int pageNumber = 0;
-        int pageSize = 5;
-        Page<User> pageUsers = advertisingServiceImp.getPageUsersFilteredByMinAge(age, pageNumber, pageSize);
-        while (pageNumber <= pageUsers.getTotalPages()) {
-            advertisingServiceImp.makeSpam(pageUsers.toList());
-            pageUsers = advertisingServiceImp.getPageUsersFilteredByMinAge(age, ++pageNumber, pageSize);
-        }
-        return "SPAM SPAM";
-    }
 }
