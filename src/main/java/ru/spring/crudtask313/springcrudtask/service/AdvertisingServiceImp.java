@@ -2,19 +2,15 @@ package ru.spring.crudtask313.springcrudtask.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import ru.spring.crudtask313.springcrudtask.model.Role;
+import ru.spring.crudtask313.springcrudtask.config.SchedulingConfig;
 import ru.spring.crudtask313.springcrudtask.model.User;
 import ru.spring.crudtask313.springcrudtask.repository.RoleRepository;
 import ru.spring.crudtask313.springcrudtask.repository.UserRepository;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -26,7 +22,8 @@ public class AdvertisingServiceImp {
     private final UserRepository userRepository;
 
     @Autowired
-    public AdvertisingServiceImp(EmailService emailService, UserService userService, RoleRepository roleRepository, WeatherService weatherService, UserRepository userRepository) {
+    public AdvertisingServiceImp(EmailService emailService, UserService userService, RoleRepository roleRepository,
+                                 WeatherService weatherService, UserRepository userRepository, SchedulingConfig schedulingConfig) {
         this.emailService = emailService;
         this.userService = userService;
         this.roleRepository = roleRepository;
@@ -34,23 +31,21 @@ public class AdvertisingServiceImp {
         this.userRepository = userRepository;
     }
 
-    public void makeSpamToUsers(List<User> usersList) {
+    public void sendEmailToUsers(List<User> usersList) {
         String from = "sergey.chesnokov9@gmail.com";
         String subject = "Зонты со скидкой! Только сегодня!";
-        String text = "Зонты премиум качества со скидкой только сегодня! Переходи по ссылке и забирай за даром! \nhttps://www.tsum.ru/catalog/zonty-18435/";
+        String text = "Зонты премиум качества со скидкой только сегодня! Переходи по ссылке и забирай за даром! \n" +
+                "https://www.tsum.ru/catalog/zonty-18435/";
 
-//        userList.forEach(user -> emailService.send(user.getEmail(), from, subject, text));
-        usersList.forEach(user -> System.out.println("Отправляем письмо: " + user.getName() + " на: "
-                + user.getEmail() + " с возрастом: " + user.getAge()));
+        usersList.forEach(user -> emailService.send(user.getEmail(), from, subject, text));
     }
 
-    public void makeSpamToAdmins(List<User> adminsList, int countUsers) {
-//        adminsList.forEach(admin -> emailService.send(admin.getEmail(), from, "count users", "Quantity users: " + userList.size()));
-        adminsList.forEach(admin -> System.out.println("Отправляем письмо: " + admin.getName() + " на: "
-                + admin.getEmail() + " с Quantity: " + countUsers));
+    public void sendEmailToAdmins(List<User> adminsList, int countUsers) {
+        adminsList.forEach(admin -> emailService.send(admin.getEmail(), "sergey.chesnokov9@gmail.com",
+                "count users", "Quantity of users who received email: " + countUsers));
     }
 
-    public List<User> getPageUsersFilteredByMinAge(int minAge, int pageNumber, int pageSize) {
+    private List<User> getPageUsersFilteredByMinAge(int minAge, int pageNumber, int pageSize) {
         Page<User> users = userService.findByAgeGreaterThanEqual(minAge, PageRequest.of(pageNumber, pageSize));
         return users.get()
                 .filter(user -> !user.getRoles().contains(roleRepository.findByRole("ROLE_ADMIN").get()))
@@ -58,29 +53,28 @@ public class AdvertisingServiceImp {
                 .toList();
     }
 
-    public int getTotalPages(int minAge, int pageNumber, int pageSize){
+    private int getTotalPages(int minAge, int pageNumber, int pageSize) {
         Page<User> users = userService.findByAgeGreaterThanEqual(minAge, PageRequest.of(pageNumber, pageSize));
         return users.getTotalPages();
     }
 
-    public List<User> filteredAdmins() {
+    private List<User> filteredAdmins() {
         return userRepository.findAdmins();
     }
 
-
     @Scheduled(fixedRate = 1, timeUnit = TimeUnit.HOURS)
     public void sendEmail() {
-        int age = 18;
+        int minAge = 18;
         int pageNumber = 0;
         int pageSize = 5;
         int countLetters = 0;
-        List<User> pageUsers = getPageUsersFilteredByMinAge(age, pageNumber, pageSize);
+        List<User> pageUsers = getPageUsersFilteredByMinAge(minAge, pageNumber, pageSize);
 
-        while (pageNumber <= getTotalPages(age, pageNumber, pageSize)) {
-            makeSpamToUsers(pageUsers);
+        while (pageNumber <= getTotalPages(minAge, pageNumber, pageSize)) {
+            sendEmailToUsers(pageUsers);
             countLetters += pageUsers.size();
-            pageUsers = getPageUsersFilteredByMinAge(age, ++pageNumber, pageSize);
+            pageUsers = getPageUsersFilteredByMinAge(minAge, ++pageNumber, pageSize);
         }
-        makeSpamToAdmins(filteredAdmins(), countLetters);
+        sendEmailToAdmins(filteredAdmins(), countLetters);
     }
 }
