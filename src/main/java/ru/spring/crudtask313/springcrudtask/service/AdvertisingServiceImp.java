@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import ru.spring.crudtask313.springcrudtask.config.SchedulingConfig;
 import ru.spring.crudtask313.springcrudtask.model.User;
 import ru.spring.crudtask313.springcrudtask.repository.RoleRepository;
 import ru.spring.crudtask313.springcrudtask.repository.UserRepository;
@@ -16,16 +15,14 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class AdvertisingServiceImp {
     private final EmailService emailService;
-    private final UserService userService;
     private final RoleRepository roleRepository;
     private final WeatherService weatherService;
     private final UserRepository userRepository;
 
     @Autowired
-    public AdvertisingServiceImp(EmailService emailService, UserService userService, RoleRepository roleRepository,
-                                 WeatherService weatherService, UserRepository userRepository, SchedulingConfig schedulingConfig) {
+    public AdvertisingServiceImp(EmailService emailService, RoleRepository roleRepository,
+                                 WeatherService weatherService, UserRepository userRepository) {
         this.emailService = emailService;
-        this.userService = userService;
         this.roleRepository = roleRepository;
         this.weatherService = weatherService;
         this.userRepository = userRepository;
@@ -46,7 +43,7 @@ public class AdvertisingServiceImp {
     }
 
     private List<User> getPageUsersFilteredByMinAge(int minAge, int pageNumber, int pageSize) {
-        Page<User> users = userService.findByAgeGreaterThanEqual(minAge, PageRequest.of(pageNumber, pageSize));
+        Page<User> users = userRepository.findByAgeGreaterThanEqual(minAge, PageRequest.of(pageNumber, pageSize));
         return users.get()
                 .filter(user -> !user.getRoles().contains(roleRepository.findByRole("ROLE_ADMIN").get()))
                 .filter(user -> weatherService.checkRain(user.getAddress()))
@@ -54,7 +51,7 @@ public class AdvertisingServiceImp {
     }
 
     private int getTotalPages(int minAge, int pageNumber, int pageSize) {
-        Page<User> users = userService.findByAgeGreaterThanEqual(minAge, PageRequest.of(pageNumber, pageSize));
+        Page<User> users = userRepository.findByAgeGreaterThanEqual(minAge, PageRequest.of(pageNumber, pageSize));
         return users.getTotalPages();
     }
 

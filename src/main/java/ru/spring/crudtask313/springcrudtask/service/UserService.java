@@ -12,8 +12,6 @@ public interface UserService {
 
     Optional<User> findById(long id);
 
-    Page<User> findByAgeGreaterThanEqual(int age, Pageable pageable);
-
     boolean save(User user);
 
     void update(User updatedUser);

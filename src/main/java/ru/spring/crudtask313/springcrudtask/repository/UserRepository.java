@@ -20,6 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByName(String username);
 
     Page<User> findByAgeGreaterThanEqual(int age, Pageable pageable);
+
     @Query(value = "SELECT users.age, users.id, users.name, users.email, users.password, users.address, users.lastname " +
             "FROM users " +
             "JOIN  user_roles ON users.id = user_roles.user_id " +

@@ -44,11 +44,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
         return userRepository.findById(id);
     }
 
-
-    public Page<User> findByAgeGreaterThanEqual(int age, Pageable pageable) {
-        return userRepository.findByAgeGreaterThanEqual(age, pageable);
-    }
-
     @Override
     public boolean save(User user) {
         Optional<User> userFromDB = userRepository.findByName(user.getName());

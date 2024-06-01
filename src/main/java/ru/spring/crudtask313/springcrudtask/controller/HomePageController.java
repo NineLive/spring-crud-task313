@@ -45,7 +45,7 @@ public class HomePageController {
 
     @ResponseBody
     @GetMapping("/current")
-    public UserDTO test(Authentication authentication) {
+    public UserDTO current(Authentication authentication) {
         User userPrincipal = (User) authentication.getPrincipal();
         User user = userService.findById(userPrincipal.getId()).get();
         return UserDTO.builder()
