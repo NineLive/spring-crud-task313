@@ -101,7 +101,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
                     .name("admin")
                     .lastname("admin")
                     .age(0)
-                    .email("admin@admin.com")
+                    .email("sergey.chesnokov9@gmail.com")
                     .address("Москва")
                     .password(passwordEncoder.encode("admin"))
                     .roles(setrole)

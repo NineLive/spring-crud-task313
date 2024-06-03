@@ -42,11 +42,15 @@ public class AdvertisingServiceImp {
                 "https://www.tsum.ru/catalog/zonty-18435/";
 
         usersList.forEach(user -> emailService.send(user.getEmail(), from, subject, text));
+        //debug
+        usersList.forEach(user -> System.out.println(user.getName() + " " + user.getEmail()));
     }
 
     public void sendEmailToAdmins(List<User> adminsList, int countUsers) {
         adminsList.forEach(admin -> emailService.send(admin.getEmail(), "sergey.chesnokov9@gmail.com",
                 "count users", "Quantity of users who received email: " + countUsers));
+        //debug
+        adminsList.forEach(admin -> System.out.println(admin.getName() + " " + admin.getEmail() + "Quantity of users who received email: " + countUsers));
     }
 
     private List<User> getPageUsersFilteredByMinAge(int minAge, int pageNumber, int pageSize) {
@@ -66,7 +70,7 @@ public class AdvertisingServiceImp {
         return userRepository.findAdmins();
     }
 
-    @Scheduled(fixedRateString = "${scheduling.timing}", timeUnit = TimeUnit.HOURS)
+    @Scheduled(fixedRateString = "${scheduling.timing}", timeUnit = TimeUnit.MINUTES)
     public void sendEmail() {
         int pageNumber = 0;
         int countLetters = 0;
