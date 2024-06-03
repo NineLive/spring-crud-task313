@@ -1,11 +1,13 @@
 package ru.spring.crudtask313.springcrudtask.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.spring.crudtask313.springcrudtask.model.User;
+import ru.spring.crudtask313.springcrudtask.property.AdvertisingProperty;
 import ru.spring.crudtask313.springcrudtask.repository.RoleRepository;
 import ru.spring.crudtask313.springcrudtask.repository.UserRepository;
 
@@ -18,14 +20,19 @@ public class AdvertisingServiceImp {
     private final RoleRepository roleRepository;
     private final WeatherService weatherService;
     private final UserRepository userRepository;
+    private final AdvertisingProperty advertisingProperty;
+
+    @Value("${advertising.pagination.page-size}")
+    private int pageSize;
 
     @Autowired
     public AdvertisingServiceImp(EmailService emailService, RoleRepository roleRepository,
-                                 WeatherService weatherService, UserRepository userRepository) {
+                                 WeatherService weatherService, UserRepository userRepository, AdvertisingProperty advertisingProperty) {
         this.emailService = emailService;
         this.roleRepository = roleRepository;
         this.weatherService = weatherService;
         this.userRepository = userRepository;
+        this.advertisingProperty = advertisingProperty;
     }
 
     public void sendEmailToUsers(List<User> usersList) {
@@ -59,18 +66,16 @@ public class AdvertisingServiceImp {
         return userRepository.findAdmins();
     }
 
-    @Scheduled(fixedRate = 1, timeUnit = TimeUnit.HOURS)
+    @Scheduled(fixedRateString = "${scheduling.timing}", timeUnit = TimeUnit.HOURS)
     public void sendEmail() {
-        int minAge = 18;
         int pageNumber = 0;
-        int pageSize = 5;
         int countLetters = 0;
-        List<User> pageUsers = getPageUsersFilteredByMinAge(minAge, pageNumber, pageSize);
+        List<User> pageUsers = getPageUsersFilteredByMinAge(advertisingProperty.getMinAge(), pageNumber, pageSize);
 
-        while (pageNumber <= getTotalPages(minAge, pageNumber, pageSize)) {
+        while (pageNumber <= getTotalPages(advertisingProperty.getMinAge(), pageNumber, pageSize)) {
             sendEmailToUsers(pageUsers);
             countLetters += pageUsers.size();
-            pageUsers = getPageUsersFilteredByMinAge(minAge, ++pageNumber, pageSize);
+            pageUsers = getPageUsersFilteredByMinAge(advertisingProperty.getMinAge(), ++pageNumber, pageSize);
         }
         sendEmailToAdmins(filteredAdmins(), countLetters);
     }
