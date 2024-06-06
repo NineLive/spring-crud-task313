@@ -1,5 +1,8 @@
 package ru.spring.crudtask313.springcrudtask.service;
 
+
+import ch.qos.logback.classic.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,7 @@ public class AdvertisingServiceImp {
     private final WeatherService weatherService;
     private final UserRepository userRepository;
     private final AdvertisingProperty advertisingProperty;
+    private final Logger logger = (Logger) LoggerFactory.getLogger(AdvertisingServiceImp.class);
 
     @Value("${advertising.pagination.page-size}")
     private int pageSize;
@@ -43,14 +47,14 @@ public class AdvertisingServiceImp {
 
         usersList.forEach(user -> emailService.send(user.getEmail(), from, subject, text));
         //debug
-        usersList.forEach(user -> System.out.println(user.getName() + " " + user.getEmail()));
+        usersList.forEach(user -> logger.info("{} {}", user.getName(), user.getEmail()));
     }
 
     public void sendEmailToAdmins(List<User> adminsList, int countUsers) {
         adminsList.forEach(admin -> emailService.send(admin.getEmail(), "sergey.chesnokov9@gmail.com",
                 "count users", "Quantity of users who received email: " + countUsers));
         //debug
-        adminsList.forEach(admin -> System.out.println(admin.getName() + " " + admin.getEmail() + "Quantity of users who received email: " + countUsers));
+        adminsList.forEach(admin -> logger.info("{} {} Quantity of users who received email: {}", admin.getName(), admin.getEmail(), countUsers));
     }
 
     private List<User> getPageUsersFilteredByMinAge(int minAge, int pageNumber, int pageSize) {
