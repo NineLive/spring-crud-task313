@@ -51,6 +51,11 @@ jobs:
       - name: ninelive/crud Build and Push to Dockerhub
         uses: docker/build-push-action@v2
         with:
+          context: .
           file: ./Dockerfile
           push: true
           tags: ninelive/crud:backend
+      - name: path2
+        run: pwd
+      - name: path3
+        run: ls
