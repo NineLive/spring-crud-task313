@@ -32,8 +32,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+      - name: path
+        run: pwd
       - name: Package maven
         run: mvn clean package -DskipTests=true
+      - name: path2
+        run: pwd
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
