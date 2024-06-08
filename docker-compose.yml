@@ -3,7 +3,7 @@ services:
     image: ninelive/crud:backend
     container_name: backend-container
     ports:
-      - "8089:8080"
+      - "9999:8080"
     environment:
       CRUD_DB_HOST: db
       CRUD_DB_PORT: 5432
