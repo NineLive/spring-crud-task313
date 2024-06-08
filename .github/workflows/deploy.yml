@@ -62,8 +62,9 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            cd crud
             sudo docker stop backend-container
             sudo docker rm backend-container
             sudo docker rmi ninelive/crud:backend
-            sudo docker-compose -f ~/crud/docker-compose.yml --env-file=/crud/.env up -d
+            sudo docker-compose -f docker-compose.yml --env-file=.env up -d
             sudo docker ps -a

@@ -55,7 +55,7 @@ public class AdvertisingServiceImp {
                 "count users", "Quantity of users who received email: " + countUsers));
         //debug
         adminsList.forEach(admin -> logger.info("{} {} Quantity of users who received email: {}", admin.getName(), admin.getEmail(), countUsers));
-        System.out.println("test test test test test test test test");
+        logger.info("test test test test test test test test");
     }
 
     private List<User> getPageUsersFilteredByMinAge(int minAge, int pageNumber, int pageSize) {
