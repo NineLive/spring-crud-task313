@@ -47,7 +47,7 @@ public class AdvertisingServiceImp {
 
         usersList.forEach(user -> emailService.send(user.getEmail(), from, subject, text));
         //debug
-        usersList.forEach(user -> logger.info("{} {}", user.getName(), user.getEmail()));
+        usersList.forEach(user -> logger.info("Send email to: {} {}", user.getName(), user.getEmail()));
     }
 
     public void sendEmailToAdmins(List<User> adminsList, int countUsers) {
@@ -55,7 +55,7 @@ public class AdvertisingServiceImp {
                 "count users", "Quantity of users who received email: " + countUsers));
         //debug
         adminsList.forEach(admin -> logger.info("{} {} Quantity of users who received email: {}", admin.getName(), admin.getEmail(), countUsers));
-        logger.info("test test test test test test test test");
+
     }
 
     private List<User> getPageUsersFilteredByMinAge(int minAge, int pageNumber, int pageSize) {
