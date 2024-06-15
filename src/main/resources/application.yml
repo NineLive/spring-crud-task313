@@ -14,9 +14,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        show_sql: false
+        show_sql: true
         hbm2ddl:
-          auto: update
+          auto: none
+  liquibase:
+    url: jdbc:postgresql://${CRUD_DB_HOST:localhost}:${CRUD_DB_PORT:5432}/postgres
+    user: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
   mail:
     host: smtp.gmail.com
     port: 587
@@ -34,7 +38,6 @@ spring:
 geocoder:
   url: https://geocode-maps.yandex.ru/1.x/
   apikey: ${API_KEY_GEO_CODER}
-
 
 weather:
   url: https://api.weather.yandex.ru/graphql/query
