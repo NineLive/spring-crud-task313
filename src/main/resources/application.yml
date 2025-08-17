@@ -24,8 +24,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${SMTP_USER_NAME}
-    password: ${SMTP_PASSWORD}
+    username: ${SMTP_USER_NAME:sergey.chesnokov9@gmail.com}
+    password: ${SMTP_PASSWORD:prxd vbks rpey uype}
     properties:
       mail:
         smtp:
@@ -37,11 +37,11 @@ spring:
 
 geocoder:
   url: https://geocode-maps.yandex.ru/1.x/
-  apikey: ${API_KEY_GEO_CODER}
+  apikey: ${API_KEY_GEO_CODER:08a201f3-434c-4648-b0a0-464517d6889e}
 
 weather:
   url: https://api.weather.yandex.ru/graphql/query
-  apikey: ${API_KEY_WEATHER}
+  apikey: ${API_KEY_WEATHER:0349f327-6eaf-4d57-9d88-38a1e4cdacd0}
 
 advertising:
   minage: 18
