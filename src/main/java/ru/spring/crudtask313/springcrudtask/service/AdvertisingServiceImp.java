@@ -77,7 +77,7 @@ public class AdvertisingServiceImp {
     }
 
     @Scheduled(fixedRateString = "${scheduling.timing}", timeUnit = TimeUnit.MINUTES)
-    @SchedulerLock(lockAtLeastFor = "30s", lockAtMostFor = "1m")
+    @SchedulerLock(name = "sendEmailLocker",lockAtLeastFor = "30s", lockAtMostFor = "1m")
     public void sendEmail() {
         int pageNumber = 0;
         int countLetters = 0;
