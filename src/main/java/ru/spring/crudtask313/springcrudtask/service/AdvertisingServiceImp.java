@@ -2,6 +2,7 @@ package ru.spring.crudtask313.springcrudtask.service;
 
 
 import ch.qos.logback.classic.Logger;
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,6 +77,7 @@ public class AdvertisingServiceImp {
     }
 
     @Scheduled(fixedRateString = "${scheduling.timing}", timeUnit = TimeUnit.MINUTES)
+    @SchedulerLock(lockAtLeastFor = "30s", lockAtMostFor = "1m")
     public void sendEmail() {
         int pageNumber = 0;
         int countLetters = 0;
